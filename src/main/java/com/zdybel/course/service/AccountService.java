@@ -1,5 +1,6 @@
 package com.zdybel.course.service;
 
+import com.zdybel.course.dto.transfer.Request.AccountRequestDTO;
 import com.zdybel.course.entity.Account;
 import com.zdybel.course.entity.Bill;
 import com.zdybel.course.exceptions.AccountNotFoundException;
@@ -13,17 +14,25 @@ import java.util.List;
 public class AccountService {
 
 
+
     private final AccountRepository accountRepository;
 
 
     @Autowired
-    public AccountService(AccountRepository accountRepository) {
+    public AccountService (AccountRepository accountRepository) {
+
         this.accountRepository = accountRepository;
     }
 
 
-    public Long save(String name, String email, List<Bill> bills) {
-        Account account = new Account(name, email, bills);
+
+    public Long save(AccountRequestDTO requestDTO) {
+
+        String name = requestDTO.getName();
+        String email = requestDTO.getEmail();
+
+        Account account = new Account( name, email);
+
         return accountRepository.save(account).getAccountId();
     }
 

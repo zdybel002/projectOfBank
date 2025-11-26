@@ -53,6 +53,7 @@ public class AccountResponseDTO {
         this.email = email;
     }
 
+
     public List<BillResponseDTO> getBills() {
         return bills;
     }

@@ -1,11 +1,7 @@
 package com.zdybel.course.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.zdybel.course.dto.BillRequestDTO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.zdybel.course.dto.transfer.Request.BillRequestDTO;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
@@ -16,15 +12,19 @@ public class Bill {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long billId;
 
-
     private BigDecimal amount;
-
 
     private Boolean isDefault;
 
-    public Bill(BigDecimal amount, Boolean isDefault) {
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id") // Nazwa kolumny klucza obcego w tabeli 'bill'
+    private Account account; // Encja User
+
+    public Bill(BigDecimal amount, Boolean isDefault, Account account) {
         this.amount = amount;
         this.isDefault = isDefault;
+        this.account = account;
     }
 
     public Bill(BillRequestDTO billRequestDTO){
@@ -54,6 +54,18 @@ public class Bill {
 
     public void setDefault(Boolean aDefault) {
         isDefault = aDefault;
+    }
+
+    public void setBillId(Long billId) {
+        this.billId = billId;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override

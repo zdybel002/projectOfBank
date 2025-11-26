@@ -15,13 +15,22 @@ public class Account {
 
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    // ZMIEŃ: Usuń CASCADE.ALL i dodaj mappedBy
+    @OneToMany(
+            mappedBy = "account", // Wskazuje na pole 'account' w klasie Bill
+            fetch = FetchType.LAZY,
+            cascade = CascadeType.PERSIST // Opcjonalnie: Użyj tylko PERSIST
+    )
     private List<Bill> bills;
 
     public Account(String name, String email, List<Bill> bills) {
         this.name = name;
         this.email = email;
         this.bills = bills;
+    }
+    public Account(String name, String email) {
+        this.name = name;
+        this.email = email;
     }
 
     public Account() {

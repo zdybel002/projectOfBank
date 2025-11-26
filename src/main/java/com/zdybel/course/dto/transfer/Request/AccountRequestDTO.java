@@ -1,6 +1,4 @@
-package com.zdybel.course.dto;
-
-import java.util.List;
+package com.zdybel.course.dto.transfer.Request;
 
 public class AccountRequestDTO {
 
@@ -8,7 +6,7 @@ public class AccountRequestDTO {
 
     private String email;
 
-    private List<BillRequestDTO> bills;
+
 
     public String getName() {
         return name;
@@ -18,7 +16,6 @@ public class AccountRequestDTO {
         return email;
     }
 
-    public List<BillRequestDTO> getBills() {
-        return bills;
-    }
+
+
 }
