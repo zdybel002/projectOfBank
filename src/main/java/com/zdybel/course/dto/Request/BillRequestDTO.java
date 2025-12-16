@@ -1,7 +1,7 @@
-package com.zdybel.course.dto.transfer.Request;
+package com.zdybel.course.dto.Request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.zdybel.course.entity.Account;
+import com.zdybel.course.utils.Currency;
 
 import java.math.BigDecimal;
 
@@ -13,8 +13,11 @@ public class BillRequestDTO {
     @JsonProperty("isDefault")
     private Boolean isDefault;
 
-    @JsonProperty("id")
+    @JsonProperty("accountId")
     private Long AccountId;
+
+    @JsonProperty("currency")
+    private Currency currency;
 
 
     public BigDecimal getAmount() {
@@ -39,5 +42,13 @@ public class BillRequestDTO {
 
     public void setAccountId(Long accountId) {
         AccountId = accountId;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }

@@ -1,9 +1,11 @@
 package com.zdybel.course.controller;
 
-import com.zdybel.course.dto.AccountResponseDTO;
-import com.zdybel.course.dto.transfer.Request.AccountRequestDTO;
+import com.zdybel.course.dto.response.AccountResponseDTO;
+import com.zdybel.course.dto.Request.AccountRequestDTO;
+import com.zdybel.course.dto.response.AllAccountsResponse;
 import com.zdybel.course.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,6 +33,14 @@ public class AccountController {
         return accountService.save(accountRequestDTO);
     }
 
+
+    @GetMapping("accounts")
+    public ResponseEntity<AllAccountsResponse> getAllAccounts() {
+
+        AllAccountsResponse response = accountService.getAllAccounts();
+
+        return ResponseEntity.ok(response);
+    }
 
 
 }

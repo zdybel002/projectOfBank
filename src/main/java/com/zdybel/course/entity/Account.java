@@ -15,9 +15,9 @@ public class Account {
 
     private String email;
 
-    // ZMIEŃ: Usuń CASCADE.ALL i dodaj mappedBy
+
     @OneToMany(
-            mappedBy = "account", // Wskazuje na pole 'account' w klasie Bill
+            mappedBy = "accountId", // Wskazuje na pole 'account' w klasie Bill
             fetch = FetchType.LAZY,
             cascade = CascadeType.PERSIST // Opcjonalnie: Użyj tylko PERSIST
     )
@@ -62,6 +62,10 @@ public class Account {
 
     public void setBills(List<Bill> bills) {
         this.bills = bills;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
     @Override

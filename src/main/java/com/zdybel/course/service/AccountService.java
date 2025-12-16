@@ -1,8 +1,8 @@
 package com.zdybel.course.service;
 
-import com.zdybel.course.dto.transfer.Request.AccountRequestDTO;
+import com.zdybel.course.dto.Request.AccountRequestDTO;
+import com.zdybel.course.dto.response.AllAccountsResponse;
 import com.zdybel.course.entity.Account;
-import com.zdybel.course.entity.Bill;
 import com.zdybel.course.exceptions.AccountNotFoundException;
 import com.zdybel.course.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +41,15 @@ public class AccountService {
                 .orElseThrow(() ->
                         new AccountNotFoundException("Unable to find account with id:" + accountId));
     }
+
+    public AllAccountsResponse getAllAccounts() {
+
+
+        List<Account> accounts = accountRepository.findAll();
+
+        return new AllAccountsResponse(accounts);
+    }
+
 
     public Account update(Account account){
         return accountRepository.save(account);

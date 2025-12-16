@@ -1,4 +1,4 @@
-package com.zdybel.course.dto;
+package com.zdybel.course.dto.response;
 
 import com.zdybel.course.entity.Account;
 

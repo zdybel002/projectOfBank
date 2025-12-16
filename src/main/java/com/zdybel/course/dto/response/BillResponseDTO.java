@@ -1,6 +1,7 @@
-package com.zdybel.course.dto;
+package com.zdybel.course.dto.response;
 
 import com.zdybel.course.entity.Bill;
+import com.zdybel.course.utils.Currency;
 
 import java.math.BigDecimal;
 
@@ -12,11 +13,14 @@ public class BillResponseDTO {
 
     private Boolean isDefault;
 
+    private Currency currency;;
+
 
     public BillResponseDTO(Bill bill){
         billId = bill.getBillId();
         amount = bill.getAmount();
         isDefault = bill.getDefault();
+        currency = bill.getCurrency();
     }
 
     public BillResponseDTO(Long billId, BigDecimal amount, Boolean isDefault) {
@@ -47,5 +51,13 @@ public class BillResponseDTO {
 
     public void setDefault(Boolean aDefault) {
         isDefault = aDefault;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }

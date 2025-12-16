@@ -6,25 +6,27 @@ import java.math.BigDecimal;
 
 public class PaymentRequestDTO {
 
-    @JsonProperty("account_id")
-    private Long accountId;
+//    String billIban, BigDecimal paymentAmount
+
+    @JsonProperty("bill_iban")
+    private String billIban;
 
     @JsonProperty("amount")
-    private BigDecimal amount;
+    private BigDecimal paymentAmount;
 
-    public Long getAccountId() {
-        return accountId;
+    public String getBillIban() {
+        return billIban;
     }
 
-    public void setAccountId(Long accountId) {
-        this.accountId = accountId;
+    public void setBillIban(String billIban) {
+        this.billIban = billIban;
     }
 
-    public BigDecimal getAmount() {
-        return amount;
+    public BigDecimal getPaymentAmount() {
+        return paymentAmount;
     }
 
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
+    public void setPaymentAmount(BigDecimal paymentAmount) {
+        this.paymentAmount = paymentAmount;
     }
 }

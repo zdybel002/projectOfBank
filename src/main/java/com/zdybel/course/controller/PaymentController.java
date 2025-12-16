@@ -18,11 +18,12 @@ public class PaymentController {
 
     @PostMapping("/payments")
     public Object pay(@RequestBody PaymentRequestDTO paymentRequestDTO){
-        return paymentService.pay(paymentRequestDTO.getAccountId(), paymentRequestDTO.getAmount());
+        return paymentService.pay(paymentRequestDTO.getBillIban(), paymentRequestDTO.getPaymentAmount());
     }
+
 
     @PostMapping("/deposit")
     public Object deposit(@RequestBody PaymentRequestDTO paymentRequestDTO){
-        return paymentService.deposit(paymentRequestDTO.getAccountId(), paymentRequestDTO.getAmount());
+        return paymentService.deposit(paymentRequestDTO.getBillIban(), paymentRequestDTO.getPaymentAmount());
     }
 }
