@@ -2,15 +2,15 @@ package com.zdybel.course.controller;
 
 
 import com.zdybel.course.Kantor.ExchangeService;
-import com.zdybel.course.dto.payment.PaymentRequestDTO;
 import com.zdybel.course.dto.transfer.ExchangeRequestDTO;
-import com.zdybel.course.dto.transfer.TransferRequestDTO;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 public class ExchangeController {
 
     private final ExchangeService exchangeService;

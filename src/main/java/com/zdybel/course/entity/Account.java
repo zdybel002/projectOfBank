@@ -8,12 +8,15 @@ import java.util.List;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     private String name;
 
-    private String email;
+    private String password;
 
 
     @OneToMany(
@@ -22,6 +25,10 @@ public class Account {
             cascade = CascadeType.PERSIST // Opcjonalnie: Użyj tylko PERSIST
     )
     private List<Bill> bills;
+
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private  Role role;
 
     public Account(String name, String email, List<Bill> bills) {
         this.name = name;
@@ -66,6 +73,22 @@ public class Account {
 
     public void setAccountId(Long accountId) {
         this.accountId = accountId;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override

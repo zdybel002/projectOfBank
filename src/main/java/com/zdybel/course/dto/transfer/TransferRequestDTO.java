@@ -6,30 +6,30 @@ import java.math.BigDecimal;
 
 public class TransferRequestDTO {
 
-    @JsonProperty("account_id_from")
-    private Long accountIdFrom;
+    @JsonProperty("iban_id_from")
+    private String ibanIdFrom;
 
-    @JsonProperty("account_id_to")
-    private Long accountIdTo;
+    @JsonProperty("iban_id_to")
+    private String ibanIdTo;
 
     @JsonProperty("amount")
     private BigDecimal amount;
 
 
-    public Long getAccountIdFrom() {
-        return accountIdFrom;
+    public String getIbanIdFrom() {
+        return ibanIdFrom;
     }
 
-    public void setAccountIdFrom(Long accountIdFrom) {
-        this.accountIdFrom = accountIdFrom;
+    public void setIbanIdFrom(String ibanIdFrom) {
+        this.ibanIdFrom = ibanIdFrom;
     }
 
-    public Long getAccountIdTo() {
-        return accountIdTo;
+    public String getIbanIdTo() {
+        return ibanIdTo;
     }
 
-    public void setAccountIdTo(Long accountIdTo) {
-        this.accountIdTo = accountIdTo;
+    public void setIbanIdTo(String ibanIdTo) {
+        this.ibanIdTo = ibanIdTo;
     }
 
     public BigDecimal getAmount() {

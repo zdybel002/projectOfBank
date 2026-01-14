@@ -1,43 +1,67 @@
 package com.zdybel.course.service;
 
-import com.zdybel.course.entity.Account;
+import com.zdybel.course.dto.transfer.TransferRequestDTO;
 import com.zdybel.course.entity.Bill;
-import com.zdybel.course.exceptions.NotDefaultBillException;
-import com.zdybel.course.repository.AccountRepository;
-import com.zdybel.course.utils.AccountUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.zdybel.course.repository.BillRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
 @Service
 public class TransferService {
 
-    private final AccountService accountService;
+    private BillRepository billRepository;
 
-
-    @Autowired
-    public TransferService(AccountService accountService) {
-        this.accountService = accountService;
+    public TransferService(BillRepository billRepository){
+        this.billRepository = billRepository;
     }
 
 
+    @Transactional
+    public void transwerMoney(TransferRequestDTO requestDTO) {
+        // 1. Walidacja podstawowa
+        if (requestDTO.getAmount().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Kwota przelewu powinna być dodatnia");
+        }
+        if (requestDTO.getIbanIdFrom().equals(requestDTO.getIbanIdTo())) {
+            throw new IllegalArgumentException("Nie można wykonać przelewu na to samo konto");
+        }
 
-    public Object trasfer(Long accountIdFrom, Long accountIdTo, BigDecimal amount) {
-        Account accountFrom = accountService.getById(accountIdFrom);
-        Account accountTo = accountService.getById(accountIdTo);
+        // 2. Pobranie kont
+        Bill senderBill = billRepository.findByIban(requestDTO.getIbanIdFrom())
+                .orElseThrow(() -> new IllegalArgumentException("Konto nadawcy nie istnieje"));
 
-        Bill billFrom = AccountUtils.findDefaultBill(accountFrom);
-        Bill billTo = AccountUtils.findDefaultBill(accountTo);
+        Bill receiverBill = billRepository.findByIban(requestDTO.getIbanIdTo())
+                .orElseThrow(() -> new IllegalArgumentException("Konto odbiorcy nie istnieje"));
 
-        billFrom.setAmount(billFrom.getAmount().subtract(amount));
-        billTo.setAmount(billTo.getAmount().add(amount));
+        // 3. Sprawdzenie waluty
+        if (senderBill.getCurrency() != receiverBill.getCurrency()) {
+            throw new IllegalArgumentException("Przewalutowanie nie jest obslugiwane: " +
+                    "Konta muszą być w tej samej walucie");
+        }
 
-        accountService.update(accountFrom);
-        accountService.update(accountTo);
-        return "Success";
+        // --- POPRAWKA: Sprawdzenie salda PRZED wykonaniem operacji ---
+        // Sprawdzamy, czy saldo nadawcy jest mniejsze niż kwota przelewu z DTO
+        if (senderBill.getAmount().compareTo(requestDTO.getAmount()) < 0) {
+            throw new IllegalStateException("Niewystarczające środki na koncie nadawcy");
+        }
 
+        // --- POPRAWKA: Wykonanie operacji na kwocie z DTO ---
+        BigDecimal transferAmount = requestDTO.getAmount();
+
+        // Odejmujemy kwotę przelewu od nadawcy
+        senderBill.setAmount(senderBill.getAmount().subtract(transferAmount));
+
+        // Dodajemy kwotę przelewu do odbiorcy
+        receiverBill.setAmount(receiverBill.getAmount().add(transferAmount));
+
+        // Zapis zmian
+        billRepository.save(senderBill);
+        billRepository.save(receiverBill);
     }
+
+
 
 
 

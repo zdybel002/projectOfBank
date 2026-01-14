@@ -28,7 +28,7 @@ public class PaymentService {
         Bill bill = billRepository.findByIban(billIban)
                 .orElseThrow(() -> new RuntimeException("Nie znaleziono rachunku o IBAN: " + billIban));
 
-        // 2️⃣ Sprawdzenie, czy środki wystarczają
+        // Sprawdzenie, czy środki wystarczają
         if (bill.getAmount().compareTo(paymentAmount) < 0) {
             throw new InsufficientFundsException(
                     "Brak wystarczających środków na rachunku: " + bill.getIban());
