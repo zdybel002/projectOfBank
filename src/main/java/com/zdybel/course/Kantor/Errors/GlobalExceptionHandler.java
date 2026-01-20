@@ -30,15 +30,4 @@ public class GlobalExceptionHandler {
                 ex.getMessage()       // Komunikat błędu
         );
     }
-
-    // Opcjonalnie: Obsługa innych generycznych RuntimeException jako 500
-    @ExceptionHandler(RuntimeException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ResponseBody
-    public ErrorResponse handleGenericError(RuntimeException ex) {
-        return new ErrorResponse(
-                "INTERNAL_SERVER_ERROR",
-                "Wystąpił nieoczekiwany błąd serwera."
-        );
-    }
 }

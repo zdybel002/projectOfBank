@@ -24,6 +24,9 @@ public class SimpleExchangeRateProvider implements ExchangeRateProvider{
         if (source == Currency.PLN && target == Currency.USD){
             return new BigDecimal("0.28");
         }
+        if (source == Currency.USD && target == Currency.PLN){
+            return new BigDecimal("3.5");
+        }
         if (source == Currency.EUR && target == Currency.USD){
             return new BigDecimal("1.17");
         }
